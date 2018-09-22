@@ -1,0 +1,127 @@
+\documentclass[12pt]{article}
+\usepackage{fullpage}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[parfill]{parskip}
+
+\newcommand{\xb}{\mathbf{x}}
+\newcommand{\yb}{\mathbf{y}}
+\newcommand{\wb}{\mathbf{w}}
+\newcommand{\Xb}{\mathbf{X}}
+\newcommand{\Yb}{\mathbf{Y}}
+\newcommand{\tr}{^T}
+\newcommand{\hb}{\mathbf{h}}
+\newcommand{\Hb}{\mathbf{H}}
+
+\newcommand{\cmt}[1]{{\footnotesize\textcolor{red}{#1}}}
+\newcommand{\todo}[1]{\cmt{TO-DO: #1}}
+
+\title{CS294-112 Deep Reinforcement Learning HW2: \\ Policy Gradients}
+
+\author{
+Ninh DO - SID\#25949105
+}
+
+\date{}
+
+\usepackage{courier}
+ 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize\ttfamily,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    %numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\begin{document}
+
+
+\maketitle
+
+\textbf{Problem 1. State-dependent baseline:}
+%
+\begin{align} \label{independent}
+\sum_{t=1}^T \mathbb{E}_{\tau \sim p_\theta(\tau)}\left[ \nabla_\theta \log \pi_\theta(a_t|s_t) \left(b(s_t)\right)\right] = 0.
+\end{align}
+%
+\begin{enumerate} [label=(\alph*)]
+\item Please show equation \ref{independent} by using the law of iterated expectations, breaking $\mathbb{E}_{\tau \sim p_\theta(\tau)}$ by decoupling the state-action marginal from the rest of the trajectory.
+
+Given $p_\theta(\tau) = p_\theta(s_t, a_t)p_\theta(\tau / s_t, a_t | s_t, a_t)$, we write:
+%
+\begin{align*}
+&\sum_{t=1}^T \mathbb{E}_{\tau \sim p_\theta(\tau)}\left[ \nabla_\theta \log \pi_\theta(a_t|s_t) \left(b(s_t)\right)\right] \\
+&= \sum_{t=1}^T \mathbb{E}_{p_\theta(s_t, a_t)} \left[ \mathbb{E}_{p_\theta(\tau / s_t, a_t | s_t, a_t)} \left[  \nabla_\theta \log \pi_\theta(a_t|s_t) \left(b(s_t)\right) \right]  \right] \\
+&= \sum_{t=1}^T \int_{s_t} p_\theta(s_t, a_t) \int_{a_t} p_\theta(a_t | s_t) \nabla_\theta \log \pi_\theta(a_t|s_t) \left(b(s_t)\right) da_t ds_t \\
+&\qquad \text{(since $p_\theta(\tau / s_t, a_t | s_t, a_t)=p_\theta(a_t | s_t)$)} \\
+&= \sum_{t=1}^T \int_{s_t} p_\theta(s_t, a_t) \int_{a_t} \nabla_\theta \pi_\theta(a_t|s_t) \left(b(s_t)\right) da_t ds_t \\
+&\qquad \text{(since $p_\theta(a_t | s_t) \nabla_\theta \log \pi_\theta(a_t|s_t)=\nabla_\theta \pi_\theta(a_t|s_t)$, $p_\theta$ and $\pi_\theta$ are the same)} \\
+&= \sum_{t=1}^T \int_{s_t} p_\theta(s_t, a_t) b(s_t) \nabla_\theta \int_{a_t} \pi_\theta(a_t|s_t) da_t ds_t \\
+&= \sum_{t=1}^T \int_{s_t} p_\theta(s_t, a_t) b(s_t) \nabla_\theta 1 da_t ds_t = 0\\
+&\qquad \text{(since $\int_{a_t} \pi_\theta(a_t|s_t) da_t=1, \nabla_\theta 1 = 0$)} \\
+\end{align*}
+%
+\item Alternatively, we can consider the structure of the MDP and express $p_\theta(\tau)$ as a product of the trajectory distribution up to $s_t$ (which we denote as $(s_{1:t}, a_{1:t-1})$) and the trajectory distribution after $s_t$ conditioned on the first part (which we denote as $(s_{t+1:T}, a_{t:T} | s_{1:t}, a_{1:t-1})$):
+\begin{enumerate}
+\item Explain why, for the inner expectation, conditioning on $(s_1, a_1, ..., a_{t^*-1}, s_{t^*})$ is equivalent to conditioning only on $s_{t^*}$.
+
+Since the Markov chain is memoryless, the current state/action only depends on its most recent action/state.  
+\item Please show equation \ref{independent} by using the law of iterated expectations, breaking $\mathbb{E}_{\tau \sim p_\theta(\tau)}$ by decoupling trajectory up to $s_t$ from the trajectory after $s_t$.
+
+Given
+%
+\begin{align*}
+p_\theta(\tau) &= p_\theta(s_{1:t}, a_{1:t-1}) p_\theta(s_{t+1:T}, a_{t:T} | s_{1:t}, a_{1:t-1}) \\
+&= p_\theta(s_{1:t}, a_{1:t-1}) p_\theta(s_{t+1:T}, a_{t:T} | s_t)
+\end{align*}
+%
+We write:
+%
+\begin{align*}
+&\sum_{t=1}^T \mathbb{E}_{\tau \sim p_\theta(\tau)}\left[ \nabla_\theta \log \pi_\theta(a_t|s_t) \left(b(s_t)\right)\right] \\
+&= \mathbb{E}_{p_\theta(s_{1:t^*}, a_{1:t^*-1})} \left[ \mathbb{E}_{p_\theta(s_{t^*+1:T}, a_{t^*:T} | s_{t^*})} \left[ \sum_{t=1}^T \nabla_\theta \log \pi_\theta(a_t|s_t) \left(b(s_t)\right) \right]  \right] \\
+&= \mathbb{E}_{p_\theta(s_{1:t^*}, a_{1:t^*-1})} \left[ \mathbb{E}_{p_\theta(s_{t^*+1:T}, a_{t^*:T} | s_{t^*})} \left[ \sum_{t=t^*}^T \nabla_\theta \log \pi_\theta(a_t|s_t) \left(b(s_t)\right) \right]  \right] \\
+&\qquad \text{(truncating the head of sum because probabilily distribution is $p_\theta(s_{t^*+1:T}, a_{t^*:T} | s_{t^*})$)} \\
+&= \mathbb{E}_{p_\theta(s_{1:t^*}, a_{1:t^*-1})} \left[ \mathbb{E}_{p_\theta(s_{t^*+1:T}, a_{t^*:T} | s_{t^*})} \left[ \nabla_\theta \log \prod_{t=t^*}^T \pi_\theta(a_t|s_t) \left(b(s_t)\right) \right]  \right] \\
+&= \mathbb{E}_{p_\theta(s_{1:t^*}, a_{1:t^*-1})} \left[ \mathbb{E}_{p_\theta(s_{t^*+1:T}, a_{t^*:T} | s_{t^*})} \left[ \nabla_\theta \log \pi_\theta(s_{t^*+1:T}, a_{t^*:T} |s_t) \left(b(s_{t^*})\right) \right]  \right] \\
+&= \int_{s_t} p_\theta(s_{1:t^*}, a_{1:t^*-1}) \int_{a_t} p_\theta(s_{t^*+1:T}, a_{t^*:T} | s_{t^*}) \nabla_\theta \log \pi_\theta(s_{t^*+1:T}, a_{t^*:T} |s_t) \left(b(s_t)\right) da_t ds_t \\
+&= \int_{s_t} p_\theta(s_{1:t^*}, a_{1:t^*-1}) \int_{a_t} \nabla_\theta \pi_\theta(s_{t^*+1:T}, a_{t^*:T} |s_t)  \left(b(s_{t^*})\right) da_t ds_t \\
+&= \int_{s_t} p_\theta(s_{1:t^*}, a_{1:t^*-1}) b(s_{t^*}) \nabla_\theta \int_{a_t} \pi_\theta(s_{t^*+1:T}, a_{t^*:T} |s_t) da_t ds_t \\
+&= \int_{s_t} p_\theta(s_{1:t^*}, a_{1:t^*-1}) b(s_{t^*}) \nabla_\theta 1 da_t ds_t = 0\\
+&\qquad \text{(since $\int_{a_t} \pi_\theta(s_{t^*+1:T}, a_{t^*:T} |s_t) da_t = 1, \nabla_\theta 1 = 0$)} \\
+\end{align*}
+%
+\end{enumerate}
+\end{enumerate}
+
+\end{document}
+
+
