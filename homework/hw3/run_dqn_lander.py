@@ -24,6 +24,9 @@ def lander_optimizer():
     return dqn.OptimizerSpec(
         constructor=tf.train.AdamOptimizer,
         lr_schedule=ConstantSchedule(1e-3),
+        # lr_schedule=ConstantSchedule(0.5e-3),
+        # lr_schedule=ConstantSchedule(0.1e-3),
+        # lr_schedule=ConstantSchedule(0.01e-3),
         kwargs={}
     )
 
@@ -110,7 +113,7 @@ def main():
     env = get_env(seed)
     session = get_session()
     set_global_seeds(seed)
-    lander_learn(env, session, num_timesteps=500000, seed=seed)
+    lander_learn(env, session, num_timesteps=2000000, seed=seed)
 
 if __name__ == "__main__":
     main()

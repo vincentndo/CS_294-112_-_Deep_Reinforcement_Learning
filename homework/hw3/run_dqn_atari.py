@@ -35,12 +35,18 @@ def atari_learn(env,
     num_iterations = float(num_timesteps) / 4.0
 
     lr_multiplier = 1.0
+    # lr_schedule = PiecewiseSchedule([
+    #                                      (0,                   1e-4 * lr_multiplier),
+    #                                      (num_iterations / 10, 1e-4 * lr_multiplier),
+    #                                      (num_iterations / 2,  5e-5 * lr_multiplier),
+    #                                 ],
+    #                                 outside_value=5e-5 * lr_multiplier)
     lr_schedule = PiecewiseSchedule([
-                                         (0,                   1e-4 * lr_multiplier),
-                                         (num_iterations / 10, 1e-4 * lr_multiplier),
-                                         (num_iterations / 2,  5e-5 * lr_multiplier),
+                                         (0,                   1e-3 * lr_multiplier),
+                                         (num_iterations / 10, 1e-3 * lr_multiplier),
+                                         (num_iterations / 2,  5e-4 * lr_multiplier),
                                     ],
-                                    outside_value=5e-5 * lr_multiplier)
+                                    outside_value=5e-4 * lr_multiplier)
     optimizer = dqn.OptimizerSpec(
         constructor=tf.train.AdamOptimizer,
         kwargs=dict(epsilon=1e-4),
@@ -55,7 +61,7 @@ def atari_learn(env,
     exploration_schedule = PiecewiseSchedule(
         [
             (0, 1.0),
-            (1e6, 0.1),
+            (1e5, 0.1),     # original: 1e6
             (num_iterations / 2, 0.01),
         ], outside_value=0.01
     )
@@ -75,7 +81,7 @@ def atari_learn(env,
         frame_history_len=4,
         target_update_freq=10000,
         grad_norm_clipping=10,
-        double_q=True
+        double_q=False
     )
     env.close()
 
@@ -124,7 +130,7 @@ def main():
     print('random seed = %d' % seed)
     env = get_env(task, seed)
     session = get_session()
-    atari_learn(env, session, num_timesteps=2e8)
+    atari_learn(env, session, num_timesteps=6e6)    # original: 2e8
 
 if __name__ == "__main__":
     main()

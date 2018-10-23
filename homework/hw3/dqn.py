@@ -1,3 +1,4 @@
+import os
 import uuid
 import time
 import pickle
@@ -159,6 +160,32 @@ class QLearner(object):
     ######
 
     # YOUR CODE HERE
+    q_current = q_func(obs_t_float, self.num_actions, scope="q_func", reuse=False)
+    q_func_vars = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope="q_func")
+
+    q_target = q_func(obs_tp1_float, self.num_actions, scope="q_func_target", reuse=False)
+    target_q_func_vars = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope="q_func_target")
+
+    numbering = tf.range(0, self.batch_size, dtype=tf.int32)
+    indices = tf.concat( [ tf.expand_dims(numbering, axis=1), tf.expand_dims(self.act_t_ph, axis=1) ], axis=1 )
+    q_theta = tf.gather_nd(q_current, indices)
+
+    if not double_q:
+      q_theta_prime = tf.reduce_max(q_target, axis=1)
+    else:
+      selected_actions = tf.argmax(q_current, axis=1, output_type=tf.int32)
+      indices = tf.concat( [ tf.expand_dims(numbering, axis=1), tf.expand_dims(selected_actions, axis=1) ], axis=1 )
+      q_theta_prime = tf.gather_nd(q_target, indices)
+
+    q_T = self.rew_t_ph + (1 - self.done_mask_ph) * gamma * q_theta_prime
+
+    self.total_error = tf.reduce_sum( huber_loss(q_T - q_theta) )
+
+    self.best_action = tf.argmax( tf.squeeze(q_current) )
+
+    self.frame_history_len = frame_history_len
+    self.is_lander = lander
+    self.log = {}
 
     ######
 
@@ -229,6 +256,23 @@ class QLearner(object):
     #####
 
     # YOUR CODE HERE
+    idx = self.replay_buffer.store_frame(self.last_obs)
+
+    explore_epsilon = self.exploration.value(self.t)
+    explore = random.random()
+
+    if not self.model_initialized or explore < explore_epsilon:
+      action = random.randint(0, self.num_actions - 1)
+    else:
+      observations = self.replay_buffer.encode_recent_observation()
+      action = self.session.run(self.best_action, feed_dict={self.obs_t_ph : [observations]})
+
+    obs, reward, done, info = self.env.step(action)
+    self.replay_buffer.store_effect(idx, action, reward, done)
+    self.last_obs = obs
+
+    if done:
+      self.last_obs = self.env.reset()
 
   def update_model(self):
     ### 3. Perform experience replay and train the network.
@@ -274,8 +318,25 @@ class QLearner(object):
       #####
 
       # YOUR CODE HERE
+      obs_batch, act_batch, rew_batch, next_obs_batch, done_mask = self.replay_buffer.sample(self.batch_size)
 
-      self.num_param_updates += 1
+      if not self.model_initialized:
+        self.model_initialized = True
+        initialize_interdependent_variables(self.session, tf.global_variables(), {self.obs_t_ph: obs_batch, self.obs_tp1_ph: next_obs_batch})
+      else:
+        learning_rate = self.optimizer_spec.lr_schedule.value(self.t)
+        total_error, _ = self.session.run( (self.total_error, self.train_fn), feed_dict={ self.obs_t_ph: obs_batch,
+                                                                                          self.act_t_ph: act_batch,
+                                                                                          self.rew_t_ph: rew_batch,
+                                                                                          self.obs_tp1_ph: next_obs_batch,
+                                                                                          self.done_mask_ph: done_mask,
+                                                                                          self.learning_rate: learning_rate })
+        if self.t % self.target_update_freq == 0:
+          self.session.run(self.update_target_fn)
+          self.num_param_updates += 1
+
+      if self.t % 1000 == 0:
+        print("Timestep: {}\tTotal error: {}".format(self.t, total_error))
 
     self.t += 1
 
@@ -302,12 +363,16 @@ class QLearner(object):
 
       sys.stdout.flush()
 
-      with open(self.rew_file, 'wb') as f:
-        pickle.dump(episode_rewards, f, pickle.HIGHEST_PROTOCOL)
+      # with open(self.rew_file, 'wb') as f:
+      #   pickle.dump(episode_rewards, f, pickle.HIGHEST_PROTOCOL)
+
+    if self.model_initialized:
+      self.log[self.t] = (self.mean_episode_reward, self.best_mean_episode_reward)
 
 def learn(*args, **kwargs):
   alg = QLearner(*args, **kwargs)
   while not alg.stopping_criterion_met():
+    # print("Here", alg.model_initialized)
     alg.step_env()
     # at this point, the environment should have been advanced one step (and
     # reset if done was true), and self.last_obs should point to the new latest
@@ -315,3 +380,22 @@ def learn(*args, **kwargs):
     alg.update_model()
     alg.log_progress()
 
+  if not(os.path.exists('data')):
+    os.makedirs('data')
+
+  if alg.is_lander:
+    model_name = "lander"
+  else:
+    if alg.frame_history_len == 1:
+      model_name = "atari_ram"
+    else:
+      model_name = "atari"
+
+  logdir = model_name + '_' + time.strftime("%d-%m-%Y_%H-%M-%S")
+  logdir = os.path.join('data', logdir)
+
+  if not(os.path.exists(logdir)):
+      os.makedirs(logdir)
+
+  with open( os.path.join(logdir, "log.pkl"), 'wb' ) as f:
+    pickle.dump(alg.log, f, pickle.HIGHEST_PROTOCOL)
