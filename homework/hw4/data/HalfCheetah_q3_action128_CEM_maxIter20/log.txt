@@ -1,0 +1,234 @@
+10-25 22:30:46 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Gathering random dataset
+10-25 22:30:46 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Creating policy
+10-25 22:31:03 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Iteration -1
+10-25 22:31:03 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ---------  ---------
+10-25 22:31:03 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Itr          -1
+10-25 22:31:03 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnAvg  -149.735
+10-25 22:31:03 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnMax   -87.4459
+10-25 22:31:03 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnMin  -182.106
+10-25 22:31:03 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnStd    26.1645
+10-25 22:31:03 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ---------  ---------
+10-25 22:31:03 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    
+10-25 22:31:03 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : total      0.0 (100.0%)
+10-25 22:31:03 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : other      0.0 (100.0%)
+10-25 22:31:03 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    
+10-25 22:31:03 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Iteration 0
+10-25 22:31:03 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Training policy...
+10-25 22:31:04 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Gathering rollouts...
+10-25 22:36:48 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Appending dataset...
+10-25 22:36:48 HalfCheetah_q3_action128_CEM_maxIter20 INFO     -----------------  ------------
+10-25 22:36:48 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Itr                   0
+10-25 22:36:48 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnAvg          -122.042
+10-25 22:36:48 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnMax          -103.487
+10-25 22:36:48 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnMin          -146.753
+10-25 22:36:48 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnStd            14.0467
+10-25 22:36:48 HalfCheetah_q3_action128_CEM_maxIter20 INFO     TrainingLossFinal     0.0233109
+10-25 22:36:48 HalfCheetah_q3_action128_CEM_maxIter20 INFO     TrainingLossStart     1.03513
+10-25 22:36:48 HalfCheetah_q3_action128_CEM_maxIter20 INFO     -----------------  ------------
+10-25 22:36:48 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    
+10-25 22:36:48 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : total      345.8 (100.0%)
+10-25 22:36:48 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : get action 343.3 (99.3%)
+10-25 22:36:48 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : train policy 1.7 (0.5%)
+10-25 22:36:48 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : env step   0.6 (0.2%)
+10-25 22:36:48 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : other      0.1 (0.0%)
+10-25 22:36:48 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    
+10-25 22:36:48 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Iteration 1
+10-25 22:36:48 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Training policy...
+10-25 22:36:51 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Gathering rollouts...
+10-25 22:42:20 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Appending dataset...
+10-25 22:42:20 HalfCheetah_q3_action128_CEM_maxIter20 INFO     -----------------  -----------
+10-25 22:42:20 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Itr                  1
+10-25 22:42:20 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnAvg          -74.0005
+10-25 22:42:20 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnMax          -43.4568
+10-25 22:42:20 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnMin          -98.7196
+10-25 22:42:20 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnStd           15.0108
+10-25 22:42:20 HalfCheetah_q3_action128_CEM_maxIter20 INFO     TrainingLossFinal    0.0183431
+10-25 22:42:20 HalfCheetah_q3_action128_CEM_maxIter20 INFO     TrainingLossStart    0.0565206
+10-25 22:42:20 HalfCheetah_q3_action128_CEM_maxIter20 INFO     -----------------  -----------
+10-25 22:42:20 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    
+10-25 22:42:20 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : total      332.0 (100.0%)
+10-25 22:42:20 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : get action 328.7 (99.0%)
+10-25 22:42:20 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : train policy 2.5 (0.8%)
+10-25 22:42:20 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : env step   0.6 (0.2%)
+10-25 22:42:20 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : other      0.1 (0.0%)
+10-25 22:42:20 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    
+10-25 22:42:20 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Iteration 2
+10-25 22:42:20 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Training policy...
+10-25 22:42:25 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Gathering rollouts...
+10-25 22:48:04 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Appending dataset...
+10-25 22:48:04 HalfCheetah_q3_action128_CEM_maxIter20 INFO     -----------------  -----------
+10-25 22:48:04 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Itr                  2
+10-25 22:48:04 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnAvg          -85.6407
+10-25 22:48:04 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnMax          -70.3439
+10-25 22:48:04 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnMin          -93.5279
+10-25 22:48:04 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnStd            7.55026
+10-25 22:48:04 HalfCheetah_q3_action128_CEM_maxIter20 INFO     TrainingLossFinal    0.0130953
+10-25 22:48:04 HalfCheetah_q3_action128_CEM_maxIter20 INFO     TrainingLossStart    0.0217788
+10-25 22:48:04 HalfCheetah_q3_action128_CEM_maxIter20 INFO     -----------------  -----------
+10-25 22:48:04 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    
+10-25 22:48:04 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : total      343.4 (100.0%)
+10-25 22:48:04 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : get action 338.0 (98.4%)
+10-25 22:48:04 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : train policy 4.7 (1.4%)
+10-25 22:48:04 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : env step   0.6 (0.2%)
+10-25 22:48:04 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : other      0.1 (0.0%)
+10-25 22:48:04 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    
+10-25 22:48:04 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Iteration 3
+10-25 22:48:04 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Training policy...
+10-25 22:48:09 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Gathering rollouts...
+10-25 22:53:41 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Appending dataset...
+10-25 22:53:41 HalfCheetah_q3_action128_CEM_maxIter20 INFO     -----------------  -------------
+10-25 22:53:41 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Itr                   3
+10-25 22:53:41 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnAvg           -96.7546
+10-25 22:53:41 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnMax           -72.1779
+10-25 22:53:41 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnMin          -121.666
+10-25 22:53:41 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnStd            14.7002
+10-25 22:53:41 HalfCheetah_q3_action128_CEM_maxIter20 INFO     TrainingLossFinal     0.00708428
+10-25 22:53:41 HalfCheetah_q3_action128_CEM_maxIter20 INFO     TrainingLossStart     0.0166105
+10-25 22:53:41 HalfCheetah_q3_action128_CEM_maxIter20 INFO     -----------------  -------------
+10-25 22:53:41 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    
+10-25 22:53:41 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : total      337.1 (100.0%)
+10-25 22:53:41 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : get action 330.9 (98.2%)
+10-25 22:53:41 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : train policy 5.4 (1.6%)
+10-25 22:53:41 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : env step   0.6 (0.2%)
+10-25 22:53:41 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : other      0.1 (0.0%)
+10-25 22:53:41 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    
+10-25 22:53:41 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Iteration 4
+10-25 22:53:41 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Training policy...
+10-25 22:53:48 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Gathering rollouts...
+10-25 22:59:18 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Appending dataset...
+10-25 22:59:18 HalfCheetah_q3_action128_CEM_maxIter20 INFO     -----------------  ------------
+10-25 22:59:18 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Itr                   4
+10-25 22:59:18 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnAvg           -83.9018
+10-25 22:59:18 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnMax           -50.1266
+10-25 22:59:18 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnMin          -125.553
+10-25 22:59:18 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnStd            20.3853
+10-25 22:59:18 HalfCheetah_q3_action128_CEM_maxIter20 INFO     TrainingLossFinal     0.0071859
+10-25 22:59:18 HalfCheetah_q3_action128_CEM_maxIter20 INFO     TrainingLossStart     0.0110426
+10-25 22:59:18 HalfCheetah_q3_action128_CEM_maxIter20 INFO     -----------------  ------------
+10-25 22:59:18 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    
+10-25 22:59:18 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : total      336.8 (100.0%)
+10-25 22:59:18 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : get action 329.5 (97.8%)
+10-25 22:59:18 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : train policy 6.5 (1.9%)
+10-25 22:59:18 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : env step   0.6 (0.2%)
+10-25 22:59:18 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : other      0.1 (0.0%)
+10-25 22:59:18 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    
+10-25 22:59:18 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Iteration 5
+10-25 22:59:18 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Training policy...
+10-25 22:59:26 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Gathering rollouts...
+10-25 23:04:52 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Appending dataset...
+10-25 23:04:52 HalfCheetah_q3_action128_CEM_maxIter20 INFO     -----------------  ------------
+10-25 23:04:52 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Itr                  5
+10-25 23:04:52 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnAvg          -87.2007
+10-25 23:04:52 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnMax          -69.7636
+10-25 23:04:52 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnMin          -97.6508
+10-25 23:04:52 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnStd            9.3709
+10-25 23:04:52 HalfCheetah_q3_action128_CEM_maxIter20 INFO     TrainingLossFinal    0.00469666
+10-25 23:04:52 HalfCheetah_q3_action128_CEM_maxIter20 INFO     TrainingLossStart    0.00654999
+10-25 23:04:52 HalfCheetah_q3_action128_CEM_maxIter20 INFO     -----------------  ------------
+10-25 23:04:52 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    
+10-25 23:04:52 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : total      334.1 (100.0%)
+10-25 23:04:52 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : get action 325.5 (97.4%)
+10-25 23:04:52 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : train policy 7.8 (2.3%)
+10-25 23:04:52 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : env step   0.6 (0.2%)
+10-25 23:04:52 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : other      0.1 (0.0%)
+10-25 23:04:52 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    
+10-25 23:04:52 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Iteration 6
+10-25 23:04:52 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Training policy...
+10-25 23:05:01 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Gathering rollouts...
+10-25 23:10:29 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Appending dataset...
+10-25 23:10:29 HalfCheetah_q3_action128_CEM_maxIter20 INFO     -----------------  -------------
+10-25 23:10:29 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Itr                   6
+10-25 23:10:29 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnAvg           -85.5883
+10-25 23:10:29 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnMax           -62.3871
+10-25 23:10:29 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnMin          -100.681
+10-25 23:10:29 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnStd            13.8993
+10-25 23:10:29 HalfCheetah_q3_action128_CEM_maxIter20 INFO     TrainingLossFinal     0.00519986
+10-25 23:10:29 HalfCheetah_q3_action128_CEM_maxIter20 INFO     TrainingLossStart     0.00503318
+10-25 23:10:29 HalfCheetah_q3_action128_CEM_maxIter20 INFO     -----------------  -------------
+10-25 23:10:29 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    
+10-25 23:10:29 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : total      337.6 (100.0%)
+10-25 23:10:29 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : get action 327.4 (97.0%)
+10-25 23:10:29 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : train policy 9.4 (2.8%)
+10-25 23:10:29 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : env step   0.6 (0.2%)
+10-25 23:10:29 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : other      0.1 (0.0%)
+10-25 23:10:29 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    
+10-25 23:10:29 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Iteration 7
+10-25 23:10:29 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Training policy...
+10-25 23:10:40 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Gathering rollouts...
+10-25 23:16:06 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Appending dataset...
+10-25 23:16:06 HalfCheetah_q3_action128_CEM_maxIter20 INFO     -----------------  ------------
+10-25 23:16:06 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Itr                  7
+10-25 23:16:06 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnAvg          -75.9955
+10-25 23:16:06 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnMax          -57.0961
+10-25 23:16:06 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnMin          -93.628
+10-25 23:16:06 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnStd           13.0473
+10-25 23:16:06 HalfCheetah_q3_action128_CEM_maxIter20 INFO     TrainingLossFinal    0.00356014
+10-25 23:16:06 HalfCheetah_q3_action128_CEM_maxIter20 INFO     TrainingLossStart    0.00497335
+10-25 23:16:06 HalfCheetah_q3_action128_CEM_maxIter20 INFO     -----------------  ------------
+10-25 23:16:06 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    
+10-25 23:16:06 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : total      336.7 (100.0%)
+10-25 23:16:06 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : get action 325.4 (96.6%)
+10-25 23:16:06 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : train policy 10.6 (3.1%)
+10-25 23:16:06 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : env step   0.6 (0.2%)
+10-25 23:16:06 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : other      0.1 (0.0%)
+10-25 23:16:06 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    
+10-25 23:16:06 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Iteration 8
+10-25 23:16:06 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Training policy...
+10-25 23:16:18 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Gathering rollouts...
+10-25 23:21:44 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Appending dataset...
+10-25 23:21:44 HalfCheetah_q3_action128_CEM_maxIter20 INFO     -----------------  ------------
+10-25 23:21:44 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Itr                  8
+10-25 23:21:44 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnAvg          -71.1322
+10-25 23:21:44 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnMax          -43.9403
+10-25 23:21:44 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnMin          -97.7091
+10-25 23:21:44 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnStd           15.0531
+10-25 23:21:44 HalfCheetah_q3_action128_CEM_maxIter20 INFO     TrainingLossFinal    0.00358618
+10-25 23:21:44 HalfCheetah_q3_action128_CEM_maxIter20 INFO     TrainingLossStart    0.00396962
+10-25 23:21:44 HalfCheetah_q3_action128_CEM_maxIter20 INFO     -----------------  ------------
+10-25 23:21:44 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    
+10-25 23:21:44 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : total      337.6 (100.0%)
+10-25 23:21:44 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : get action 325.0 (96.3%)
+10-25 23:21:44 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : train policy 11.8 (3.5%)
+10-25 23:21:44 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : env step   0.6 (0.2%)
+10-25 23:21:44 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : other      0.1 (0.0%)
+10-25 23:21:44 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    
+10-25 23:21:44 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Iteration 9
+10-25 23:21:44 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Training policy...
+10-25 23:21:57 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Gathering rollouts...
+10-25 23:27:23 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Appending dataset...
+10-25 23:27:23 HalfCheetah_q3_action128_CEM_maxIter20 INFO     -----------------  ------------
+10-25 23:27:23 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Itr                  9
+10-25 23:27:23 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnAvg          -74.9712
+10-25 23:27:23 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnMax          -47.5147
+10-25 23:27:23 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnMin          -89.2432
+10-25 23:27:23 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnStd           11.9899
+10-25 23:27:23 HalfCheetah_q3_action128_CEM_maxIter20 INFO     TrainingLossFinal    0.0033401
+10-25 23:27:23 HalfCheetah_q3_action128_CEM_maxIter20 INFO     TrainingLossStart    0.00380306
+10-25 23:27:23 HalfCheetah_q3_action128_CEM_maxIter20 INFO     -----------------  ------------
+10-25 23:27:24 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    
+10-25 23:27:24 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : total      339.6 (100.0%)
+10-25 23:27:24 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : get action 325.7 (95.9%)
+10-25 23:27:24 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : train policy 13.2 (3.9%)
+10-25 23:27:24 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : env step   0.6 (0.2%)
+10-25 23:27:24 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : other      0.1 (0.0%)
+10-25 23:27:24 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    
+10-25 23:27:24 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Iteration 10
+10-25 23:27:24 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Training policy...
+10-25 23:27:38 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Gathering rollouts...
+10-25 23:33:06 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Appending dataset...
+10-25 23:33:06 HalfCheetah_q3_action128_CEM_maxIter20 INFO     -----------------  -------------
+10-25 23:33:06 HalfCheetah_q3_action128_CEM_maxIter20 INFO     Itr                  10
+10-25 23:33:06 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnAvg           -87.1643
+10-25 23:33:06 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnMax           -51.8434
+10-25 23:33:06 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnMin          -111.214
+10-25 23:33:06 HalfCheetah_q3_action128_CEM_maxIter20 INFO     ReturnStd            17.3311
+10-25 23:33:06 HalfCheetah_q3_action128_CEM_maxIter20 INFO     TrainingLossFinal     0.00250711
+10-25 23:33:06 HalfCheetah_q3_action128_CEM_maxIter20 INFO     TrainingLossStart     0.00290765
+10-25 23:33:06 HalfCheetah_q3_action128_CEM_maxIter20 INFO     -----------------  -------------
+10-25 23:33:06 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    
+10-25 23:33:06 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : total      342.2 (100.0%)
+10-25 23:33:06 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : get action 326.7 (95.5%)
+10-25 23:33:06 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : train policy 14.7 (4.3%)
+10-25 23:33:06 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : env step   0.6 (0.2%)
+10-25 23:33:06 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    : other      0.1 (0.0%)
+10-25 23:33:06 HalfCheetah_q3_action128_CEM_maxIter20 DEBUG    

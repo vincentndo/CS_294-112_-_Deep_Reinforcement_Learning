@@ -1,5 +1,6 @@
 import tensorflow as tf
 import numpy as np
+import tensorflow_probability as tfp
 
 import utils
 
@@ -11,7 +12,8 @@ class ModelBasedPolicy(object):
                  init_dataset,
                  horizon=15,
                  num_random_action_selection=4096,
-                 nn_layers=1):
+                 nn_layers=1,
+                 CEM_mode=False):
         self._cost_fn = env.cost_fn
         self._state_dim = env.observation_space.shape[0]
         self._action_dim = env.action_space.shape[0]
@@ -24,7 +26,7 @@ class ModelBasedPolicy(object):
         self._learning_rate = 1e-3
 
         self._sess, self._state_ph, self._action_ph, self._next_state_ph,\
-            self._next_state_pred, self._loss, self._optimizer, self._best_action = self._setup_graph()
+            self._next_state_pred, self._loss, self._optimizer, self._best_action = self._setup_graph(CEM_mode)
 
     def _setup_placeholders(self):
         """
@@ -41,7 +43,9 @@ class ModelBasedPolicy(object):
         """
         ### PROBLEM 1
         ### YOUR CODE HERE
-        raise NotImplementedError
+        state_ph = tf.placeholder(tf.float32, shape=[None, self._state_dim])
+        action_ph = tf.placeholder(tf.float32, shape=[None, self._action_dim])
+        next_state_ph = tf.placeholder(tf.float32, shape=[None, self._state_dim])
 
         return state_ph, action_ph, next_state_ph
 
@@ -65,7 +69,20 @@ class ModelBasedPolicy(object):
         """
         ### PROBLEM 1
         ### YOUR CODE HERE
-        raise NotImplementedError
+        s_mean, s_std = self._init_dataset.state_mean, self._init_dataset.state_std
+        normalized_state = utils.normalize(state, s_mean, s_std)
+        a_mean, a_std = self._init_dataset.action_mean, self._init_dataset.action_std
+        normalized_action = utils.normalize(action, a_mean, a_std)
+
+        normalized_state_action = tf.concat( [normalized_state, normalized_action], 1)
+        normalized_state_diff_pred = utils.build_mlp( normalized_state_action,
+                                                        self._state_dim,
+                                                        "dynamics",
+                                                        n_layers=self._nn_layers,
+                                                        reuse=reuse )
+        s_diff_mean, s_diff_std = self._init_dataset.delta_state_mean, self._init_dataset.delta_state_std
+        state_diff_pred = utils.unnormalize(normalized_state_diff_pred, s_diff_mean, s_diff_std)
+        next_state_pred = state_diff_pred + state
 
         return next_state_pred
 
@@ -89,11 +106,19 @@ class ModelBasedPolicy(object):
         """
         ### PROBLEM 1
         ### YOUR CODE HERE
-        raise NotImplementedError
+        actual_state_diff = next_state_ph - state_ph
+        predicted_state_diff = next_state_pred - state_ph
+
+        s_diff_mean, s_diff_std = self._init_dataset.delta_state_mean, self._init_dataset.delta_state_std
+        normalized_actual_state_diff = utils.normalize(actual_state_diff, s_diff_mean, s_diff_std)
+        normalized_predicted_state_diff = utils.normalize(predicted_state_diff, s_diff_mean, s_diff_std)
+
+        loss = tf.losses.mean_squared_error(normalized_actual_state_diff, normalized_predicted_state_diff)
+        optimizer = tf.train.AdamOptimizer(learning_rate=self._learning_rate).minimize(loss)
 
         return loss, optimizer
 
-    def _setup_action_selection(self, state_ph):
+    def _setup_action_selection(self, state_ph, CEM_mode):
         """
             Computes the best action from the current state by using randomly sampled action sequences
             to predict future states, evaluating these predictions according to a cost function,
@@ -122,11 +147,54 @@ class ModelBasedPolicy(object):
         """
         ### PROBLEM 2
         ### YOUR CODE HERE
-        raise NotImplementedError
+        states = tf.tile(state_ph, [self._num_random_action_selection, 1])
+
+        if not CEM_mode:
+
+            random_actions = tf.random_uniform( [self._num_random_action_selection, self._horizon, self._action_dim], minval=self._action_space_low, maxval=self._action_space_high )
+            horizon_costs = 0
+
+            for i in range(self._horizon):
+                actions = random_actions[:, i, :]
+                next_states = self._dynamics_func(states, actions, True)
+                horizon_costs += self._cost_fn(states, actions, next_states)
+                states = next_states
+
+            index = tf.argmin(horizon_costs)
+            best_action_sequence = random_actions[index]
+            best_action = best_action_sequence[0]
+
+        else:
+
+            a_mean, a_std = self._init_dataset.action_mean, self._init_dataset.action_std
+            top_10_percent = int(0.1 * self._num_random_action_selection)
+            itr, max_iter = 0, 20
+
+            while itr < max_iter:
+                itr += 1
+                dist = tfp.distributions.MultivariateNormalDiag(loc=a_mean, scale_diag=a_std)
+                random_actions = tf.cast( dist.sample( [self._num_random_action_selection, self._horizon] ), dtype=tf.float32 )
+                horizon_costs = 0
+
+                for i in range(self._horizon):
+                    actions = random_actions[:, i, :]
+                    next_states = self._dynamics_func(states, actions, True)
+                    horizon_costs += - self._cost_fn(states, actions, next_states)
+                    states = next_states
+
+                _, indices = tf.nn.top_k(horizon_costs, top_10_percent, sorted=True)
+                first_actions = random_actions[:, 0, :]
+                selected_actions = tf.gather(first_actions, indices, axis=0)
+                a_mean, a_var = tf.nn.moments(selected_actions, axes=[0])
+                a_std = a_var ** 0.5
+
+            index = tf.argmax(horizon_costs)
+            best_action_sequence = random_actions[index]
+            best_action = best_action_sequence[0]
 
         return best_action
 
-    def _setup_graph(self):
+    def _setup_graph(self, CEM_mode):
         """
         Sets up the tensorflow computation graph for training, prediction, and action selection
 
@@ -136,10 +204,12 @@ class ModelBasedPolicy(object):
 
         ### PROBLEM 1
         ### YOUR CODE HERE
-        raise NotImplementedError
+        state_ph, action_ph, next_state_ph = self._setup_placeholders()
+        next_state_pred = self._dynamics_func(state_ph, action_ph, False)
+        loss, optimizer = self._setup_training(state_ph, next_state_ph, next_state_pred)
         ### PROBLEM 2
         ### YOUR CODE HERE
-        best_action = None
+        best_action = self._setup_action_selection(state_ph, CEM_mode)
 
         sess.run(tf.global_variables_initializer())
 
@@ -155,7 +225,7 @@ class ModelBasedPolicy(object):
         """
         ### PROBLEM 1
         ### YOUR CODE HERE
-        raise NotImplementedError
+        loss, _ = self._sess.run([self._loss, self._optimizer], feed_dict={self._state_ph: states, self._action_ph: actions, self._next_state_ph: next_states})
 
         return loss
 
@@ -166,7 +236,7 @@ class ModelBasedPolicy(object):
         returns:
             next_state_pred: predicted next state
 
-        implementation detils:
+        implementation details:
             (i) The state and action arguments are 1-dimensional vectors (NO batch dimension)
         """
         assert np.shape(state) == (self._state_dim,)
@@ -174,7 +244,7 @@ class ModelBasedPolicy(object):
 
         ### PROBLEM 1
         ### YOUR CODE HERE
-        raise NotImplementedError
+        next_state_pred = self._sess.run(self._next_state_pred, feed_dict={self._state_ph: [state], self._action_ph: [action]})[0]
 
         assert np.shape(next_state_pred) == (self._state_dim,)
         return next_state_pred
@@ -190,7 +260,7 @@ class ModelBasedPolicy(object):
 
         ### PROBLEM 2
         ### YOUR CODE HERE
-        raise NotImplementedError
+        best_action= self._sess.run(self._best_action, feed_dict={self._state_ph: [state]})
 
         assert np.shape(best_action) == (self._action_dim,)
         return best_action

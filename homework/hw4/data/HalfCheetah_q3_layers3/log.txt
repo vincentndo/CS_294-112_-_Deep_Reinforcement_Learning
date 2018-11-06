@@ -1,0 +1,37 @@
+10-25 22:16:37 HalfCheetah_q3_layers3 INFO     Gathering random dataset
+10-25 22:16:37 HalfCheetah_q3_layers3 INFO     Creating policy
+10-25 22:16:39 HalfCheetah_q3_layers3 INFO     Iteration -1
+10-25 22:16:39 HalfCheetah_q3_layers3 INFO     ---------  ---------
+10-25 22:16:39 HalfCheetah_q3_layers3 INFO     Itr          -1
+10-25 22:16:39 HalfCheetah_q3_layers3 INFO     ReturnAvg  -163.358
+10-25 22:16:39 HalfCheetah_q3_layers3 INFO     ReturnMax  -125.056
+10-25 22:16:39 HalfCheetah_q3_layers3 INFO     ReturnMin  -199.346
+10-25 22:16:39 HalfCheetah_q3_layers3 INFO     ReturnStd    23.5809
+10-25 22:16:39 HalfCheetah_q3_layers3 INFO     ---------  ---------
+10-25 22:16:39 HalfCheetah_q3_layers3 DEBUG    
+10-25 22:16:39 HalfCheetah_q3_layers3 DEBUG    : total      0.0 (100.0%)
+10-25 22:16:39 HalfCheetah_q3_layers3 DEBUG    : other      0.0 (100.0%)
+10-25 22:16:39 HalfCheetah_q3_layers3 DEBUG    
+10-25 22:16:39 HalfCheetah_q3_layers3 INFO     Iteration 0
+10-25 22:16:39 HalfCheetah_q3_layers3 INFO     Training policy...
+10-25 22:16:42 HalfCheetah_q3_layers3 INFO     Gathering rollouts...
+10-25 22:28:37 HalfCheetah_q3_layers3 INFO     Appending dataset...
+10-25 22:28:37 HalfCheetah_q3_layers3 INFO     -----------------  -----------
+10-25 22:28:37 HalfCheetah_q3_layers3 INFO     Itr                  0
+10-25 22:28:37 HalfCheetah_q3_layers3 INFO     ReturnAvg           83.013
+10-25 22:28:37 HalfCheetah_q3_layers3 INFO     ReturnMax          120.881
+10-25 22:28:37 HalfCheetah_q3_layers3 INFO     ReturnMin           41.2622
+10-25 22:28:37 HalfCheetah_q3_layers3 INFO     ReturnStd           21.5859
+10-25 22:28:37 HalfCheetah_q3_layers3 INFO     TrainingLossFinal    0.0052942
+10-25 22:28:37 HalfCheetah_q3_layers3 INFO     TrainingLossStart    0.952768
+10-25 22:28:37 HalfCheetah_q3_layers3 INFO     -----------------  -----------
+10-25 22:28:37 HalfCheetah_q3_layers3 DEBUG    
+10-25 22:28:37 HalfCheetah_q3_layers3 DEBUG    : total      717.8 (100.0%)
+10-25 22:28:37 HalfCheetah_q3_layers3 DEBUG    : get action 712.6 (99.3%)
+10-25 22:28:37 HalfCheetah_q3_layers3 DEBUG    : train policy 3.6 (0.5%)
+10-25 22:28:37 HalfCheetah_q3_layers3 DEBUG    : env step   1.3 (0.2%)
+10-25 22:28:37 HalfCheetah_q3_layers3 DEBUG    : other      0.3 (0.0%)
+10-25 22:28:37 HalfCheetah_q3_layers3 DEBUG    
+10-25 22:28:37 HalfCheetah_q3_layers3 INFO     Iteration 1
+10-25 22:28:37 HalfCheetah_q3_layers3 INFO     Training policy...
+10-25 22:28:43 HalfCheetah_q3_layers3 INFO     Gathering rollouts...
