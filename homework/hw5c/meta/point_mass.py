@@ -27,8 +27,68 @@ class PointEnv(Env):
         #                           ----------PROBLEM 3----------
         #====================================================================================#
         # YOUR CODE HERE
-        x = np.random.uniform(-10, 10)
-        y = np.random.uniform(-10, 10)
+
+        ## Granularity 1
+
+        # odd_even = np.random.randint(2)
+        # x_interval = np.random.randint(-5, high=5)
+        # y_interval = np.random.randint(-5, high=5)
+        # x = 2 * x_interval + np.random.uniform()
+        # y = 2 * y_interval + np.random.uniform()
+
+        # if is_evaluation:
+        #     x = x + odd_even
+        #     y = y + odd_even
+        # else:
+        #     x = x + odd_even
+        #     y = y + (1 - odd_even)
+
+        ## Granularity 2
+
+        # zero_two = np.random.choice([0, 2])
+        # x_interval = np.random.choice( range(-10, 10, 4) )
+        # y_interval = np.random.choice( range(-10, 10, 4) )
+        # x = x_interval + np.random.uniform(low=0, high=2)
+        # y = y_interval + np.random.uniform(low=0, high=2)
+
+        # if is_evaluation:
+        #     x = x + zero_two
+        #     y = y + zero_two
+        # else:
+        #     x = x + zero_two
+        #     y = y + (2 - zero_two)
+
+        ## Granularity 5
+
+        # zero_five = np.random.choice([0, 5])
+        # x_interval = np.random.choice( [-10, 0] )
+        # y_interval = np.random.choice( [-10, 0] )
+        # x = x_interval + np.random.uniform(low=0, high=5)
+        # y = y_interval + np.random.uniform(low=0, high=5)
+
+        # if is_evaluation:
+        #     x = x + zero_five
+        #     y = y + zero_five
+        # else:
+        #     x = x + zero_five
+        #     y = y + (5 - zero_five)
+
+        ## Granularity 10
+
+        zero_ten = np.random.choice([0, 10])
+        x = -10 + np.random.uniform(low=0, high=10)
+        y = -10 + np.random.uniform(low=0, high=10)
+
+        if is_evaluation:
+            x = x + zero_ten
+            y = y + zero_ten
+        else:
+            x = x + zero_ten
+            y = y + (10 - zero_ten)
+
+        # x = np.random.uniform(-10, 10)
+        # y = np.random.uniform(-10, 10)
+
         self._goal = np.array([x, y])
 
     def reset(self):

@@ -76,6 +76,39 @@ def build_rnn(x, h, output_size, scope, n_layers, size, activation=tf.tanh, outp
     #====================================================================================#
     # YOUR CODE HERE
 
+    ## Approach 1
+    # _, history_size, input_size = x.get_shape()
+    # x = tf.reshape(x, (-1, history_size * input_size))
+    # x = build_mlp(x, history_size * output_size, scope, n_layers, size, activation=activation, output_activation=output_activation, regularizer=regularizer)
+    # x = tf.reshape(x, (-1, history_size, output_size))
+    # gru_cell = tf.nn.rnn_cell.GRUCell(output_size, activation=activation)
+    # x, h = tf.nn.dynamic_rnn(gru_cell, x, initial_state=h)
+    # x_out = tf.reshape(x, (-1, x.get_shape()[1] * x.get_shape()[2]))
+
+    ## Approach 2
+    gru_cell = tf.nn.rnn_cell.GRUCell(output_size, activation=activation)
+
+    _, history_size, input_size = x.get_shape()
+    for i in range(history_size):
+        xi = x[:, i, :]
+        x_mlp = build_mlp(xi, output_size, scope, n_layers, size, activation=activation, output_activation=output_activation, regularizer=regularizer)
+        x_out, h = gru_cell(x_mlp, h)
+
+    ## Approach 3
+    # gru_cell = tf.nn.rnn_cell.GRUCell(output_size, activation=activation)
+
+    # _, history_size, input_size = x.get_shape()
+    # x_temp = np.zeros(x.get_shape())
+    # for i in range(history_size):
+    #     xi = x[:, i, :]
+    #     x_mlp = build_mlp(xi, output_size, scope, n_layers, size, activation=activation, output_activation=output_activation, regularizer=regularizer)
+    #     x_temp[:, i, :] = x_mlp
+
+    # x, h = tf.nn.dynamic_rnn(gru_cell, x_temp, initial_state=h)
+    # x_out = tf.reshape(x, (-1, x.get_shape()[1] * x.get_shape()[2]))
+
+    return x_out, h
+
 def build_policy(x, h, output_size, scope, n_layers, size, gru_size, recurrent=True, activation=tf.tanh, output_activation=None):
     """
     build recurrent policy
@@ -377,26 +410,42 @@ class Agent(object):
                 # first meta ob has only the observation
                 # set a, r, d to zero, construct first meta observation in meta_obs
                 # YOUR CODE HERE
+                a = np.zeros(self.ac_dim)
+                r = np.zeros(self.reward_dim)
+                d = np.zeros(self.terminal_dim)
+                meta_obs[0, :] = np.concatenate( (ob, a, r, d) )
 
                 steps += 1
 
             # index into the meta_obs array to get the window that ends with the current timestep
             # please name the windowed observation `in_` for compatibilty with the code that adds to the replay buffer (lines 418, 420)
             # YOUR CODE HERE
+            in_ = meta_obs[max(0, steps - self.history) : steps, :]
+            
+            if in_.shape[0] < self.history:
+                zero_pad_size = [self.history - in_.shape[0], self.meta_ob_dim]
+                zero_pad = np.zeros(zero_pad_size)
+                in_ = np.concatenate( (zero_pad, in_), axis = 0)
+
+            in_ = in_[np.newaxis, ...]      # Augment dim of in_ , equivalent to np.array([in_]) or in_.reshape(-1, *in_.shape)
+                                            # Ex: arr = np.array([1, 2]), then arr[np.newaxis, ...] returns [[1, 2]], arr[..., np.newaxis] returns [[1], [2]]
 
             hidden = np.zeros((1, self.gru_size), dtype=np.float32)
 
             # get action from the policy
             # YOUR CODE HERE
+            ac = self.sess.run(self.sy_sampled_ac, feed_dict={self.sy_ob_no: in_, self.sy_hidden: hidden})[0]
 
             # step the environment
             # YOUR CODE HERE
+            next_ob, rew, done, _ = env.step(ac)
 
             ep_steps += 1
 
             done = bool(done) or ep_steps == self.max_path_length
             # construct the meta-observation and add it to meta_obs
             # YOUR CODE HERE
+            meta_obs[steps, :] = np.concatenate( (next_ob, ac, [rew], [done]) )
 
             rewards.append(rew)
             steps += 1
@@ -734,7 +783,7 @@ def train_PG(
             val_stats += vs
 
         # save trajectories for viz
-        with open("output/{}-epoch{}.pkl".format(exp_name, itr), 'wb') as f:
+        with open(os.path.join(logdir, "{}-epoch{}.pkl".format(exp_name, itr)), 'wb') as f:
             pickle.dump(agent.val_replay_buffer.all_batch(), f, pickle.HIGHEST_PROTOCOL)
         agent.val_replay_buffer.flush()
 
