@@ -1,4 +1,5 @@
 import gym
+from gym import spaces
 from gym.envs.registration import EnvSpec
 import imageio
 import matplotlib.pyplot as plt
