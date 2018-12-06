@@ -22,7 +22,7 @@ class ObservedPointEnv(Env):
         self.reset_task()
         self.reset()
 
-        self.observation_space = spaces.Box(low=-np.inf, high=np.inf, shape=(2 * len(self.tasks),))
+        self.observation_space = spaces.Box(low=-np.inf, high=np.inf, shape=(2 + len(self.tasks),))
         self.action_space = spaces.Box(low=-0.1, high=0.1, shape=(2,))
 
     def reset_task(self, is_evaluation=False):
@@ -37,14 +37,16 @@ class ObservedPointEnv(Env):
         self._goal = np.array(goals[self.task_idx])*10
 
     def reset(self):
-        self._state = np.array([0, 0] * len(self.tasks), dtype=np.float32)
+        task_vector = [0] * len(self.tasks)
+        task_vector[self.task_idx] = 1
+        self._state = np.array([0, 0] + task_vector, dtype=np.float32)
         return self._get_obs()
 
     def _get_obs(self):
         return np.copy(self._state)
 
     def step(self, action):
-        x, y = self._state[2 * self.task_idx : 2 * self.task_idx + 2]
+        x, y = self._state[:2]
         # compute reward, add penalty for large actions instead of clipping them
         x -= self._goal[0]
         y -= self._goal[1]
@@ -53,7 +55,7 @@ class ObservedPointEnv(Env):
         done = abs(x) < 0.01 and abs(y) < 0.01
         # move to next state
         augmented_action = np.zeros_like(self._state)
-        augmented_action[2 * self.task_idx : 2 * self.task_idx + 2] = action
+        augmented_action[:2] = action
         self._state = self._state + augmented_action
         ob = self._get_obs()
         return ob, reward, done, dict()
