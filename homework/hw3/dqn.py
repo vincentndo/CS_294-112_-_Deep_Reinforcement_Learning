@@ -331,9 +331,10 @@ class QLearner(object):
                                                                                           self.obs_tp1_ph: next_obs_batch,
                                                                                           self.done_mask_ph: done_mask,
                                                                                           self.learning_rate: learning_rate })
-        if self.t % self.target_update_freq == 0:
-          self.session.run(self.update_target_fn)
-          self.num_param_updates += 1
+        self.num_param_updates += 1
+        
+      if self.num_param_updates % self.target_update_freq == 0:
+        self.session.run(self.update_target_fn)
 
       if self.t % 1000 == 0:
         print("Timestep: {}\tTotal error: {}".format(self.t, total_error))
